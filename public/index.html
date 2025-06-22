@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günlüğüm</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Günlüğüm</h1>
+
+        <div class="input-section">
+           <input type="text" id="dailyNoteTitle" placeholder="Günlük Başlığı (zorunlu)"> 
+           <textarea id="dailyNoteText" placeholder="Bugünkü günlük notunuzu buraya yazın..."></textarea>
+           <select id="moodSelect">
+              <option value="">Bugün nasıl hissediyorsun?</option>
+              <option value="mutlu">Mutlu 😊</option>
+              <option value="uzgun">Üzgün 😢</option>
+              <option value="sinirli">Sinirli 😠</option>
+              <option value="yorgun">Yorgun 😴</option>
+              <option value="endise">Endişeli 😟</option>
+              <option value="sakin">Sakin 😌</option>
+              <option value="heyecanli">Heyecanlı 🤩</option>
+              <option value="normal">Normal 🙂</option>
+           </select>
+           <label for="backgroundColorPicker">Arka Plan Rengi Seç:</label>
+           <input type="color" id="backgroundColorPicker" value="#ffffff"> ```
+           <button id="saveNoteButton">Kaydet</button>
+        </div>
+
+        <div class="notes-list-section">
+            <h2>Geçmiş Günlükler</h2>
+            <div id="notesList">
+                <p>Henüz bir günlük girdisi yok.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
