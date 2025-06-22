@@ -1,4 +1,4 @@
-// HTML elemanlarını seçme
+
 const dailyNoteTitleInput = document.getElementById('dailyNoteTitle');
 const dailyNoteText = document.getElementById('dailyNoteText');
 const moodSelect = document.getElementById('moodSelect');
@@ -6,62 +6,62 @@ const backgroundColorPicker = document.getElementById('backgroundColorPicker');
 const saveNoteButton = document.getElementById('saveNoteButton');
 const notesList = document.getElementById('notesList');
 
-// Sayfa yüklendiğinde mevcut notları localStorage'dan çek
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchNotesFromLocalStorage();
 });
 
-// "Kaydet" butonuna tıklama olayı
+
 saveNoteButton.addEventListener('click', () => {
     const noteTitle = dailyNoteTitleInput.value.trim();
     const noteContent = dailyNoteText.value.trim();
     const selectedMood = moodSelect.value;
     const selectedBackgroundColor = backgroundColorPicker.value;
 
-    // Başlık zorunlu kontrolü
+    
     if (!noteTitle) {
         alert('Lütfen günlüğünüz için bir başlık girin!');
         return;
     }
 
-    // İçerik veya ruh hali zorunlu kontrolü
+    
     if (!noteContent && !selectedMood) {
         alert('Lütfen bir günlük notu girin veya bir ruh hali seçin!');
         return;
     }
 
-    // Yeni not objesi oluştur
+    
     const newNote = {
-        id: Date.now().toString(), // Benzersiz ID için zaman damgası
+        id: Date.now().toString(),
         title: noteTitle,
         content: noteContent,
         mood: selectedMood,
         background_color: selectedBackgroundColor,
-        created_at: new Date().toISOString() // Oluşturulma tarihi
+        created_at: new Date().toISOString() 
     };
 
-    // Notu localStorage'a kaydet
+    
     saveNoteToLocalStorage(newNote);
 
-    // Formu temizle
+    
     dailyNoteTitleInput.value = '';
     dailyNoteText.value = '';
     moodSelect.value = '';
     backgroundColorPicker.value = '#ffffff';
 });
 
-// Notu localStorage'a kaydeden fonksiyon
+
 function saveNoteToLocalStorage(note) {
     let notes = JSON.parse(localStorage.getItem('dailyNotes')) || [];
-    notes.unshift(note); // Yeni notu en başa ekle
+    notes.unshift(note); 
     localStorage.setItem('dailyNotes', JSON.stringify(notes));
-    addNoteToDisplay(note); // Notu ekranda göster
+    addNoteToDisplay(note); 
     alert('Günlük başarıyla kaydedildi!');
 }
 
-// Notları localStorage'dan çeken fonksiyon
+
 function fetchNotesFromLocalStorage() {
-    notesList.innerHTML = ''; // Listeyi temizle
+    notesList.innerHTML = ''; 
     let notes = JSON.parse(localStorage.getItem('dailyNotes')) || [];
 
     if (notes.length === 0) {
@@ -73,7 +73,7 @@ function fetchNotesFromLocalStorage() {
     }
 }
 
-// Notu ekranda gösteren fonksiyon (öncekiyle aynı, ID'ye göre silme eklendi)
+
 function addNoteToDisplay(note) {
     const noNotesMessage = notesList.querySelector('p');
     if (noNotesMessage && noNotesMessage.textContent === 'Henüz bir günlük girdisi yok.') {
@@ -82,7 +82,7 @@ function addNoteToDisplay(note) {
 
     const noteItem = document.createElement('div');
     noteItem.classList.add('note-item');
-    noteItem.dataset.id = note.id; // HTML öğesine ID ekle
+    noteItem.dataset.id = note.id; 
 
     noteItem.style.backgroundColor = note.background_color || '#f9f9f9';
 
@@ -121,27 +121,27 @@ function addNoteToDisplay(note) {
     deleteButton.addEventListener('click', (event) => {
         const noteId = event.target.dataset.id;
         if (confirm('Bu günlük notunu silmek istediğinizden emin misiniz?')) {
-            deleteNoteFromLocalStorage(noteId); // localStorage'dan silme fonksiyonunu çağır
+            deleteNoteFromLocalStorage(noteId); 
         }
     });
 
     notesList.prepend(noteItem);
 }
 
-// Notu localStorage'dan silen fonksiyon
+
 function deleteNoteFromLocalStorage(id) {
     let notes = JSON.parse(localStorage.getItem('dailyNotes')) || [];
-    notes = notes.filter(note => note.id !== id); // Silinecek notu filtrele
+    notes = notes.filter(note => note.id !== id); 
     localStorage.setItem('dailyNotes', JSON.stringify(notes));
 
-    // Ekrandan kaldır
+    
     const noteItemToRemove = document.querySelector(`.note-item[data-id="${id}"]`);
     if (noteItemToRemove) {
         noteItemToRemove.remove();
         alert('Günlük başarıyla silindi!');
     }
 
-    // Eğer hiç not kalmazsa mesajı göster
+    
     if (notesList.children.length === 0) {
         notesList.innerHTML = '<p>Henüz bir günlük girdisi yok.</p>';
     }
